@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Strangers — Chat</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body style="display:block; background:#0d0d0d;">
+
+  <!-- Connecting Screen -->
+  <div id="connectingScreen" class="chat-container" style="justify-content:center;align-items:center;">
+    <div class="connecting">
+      <div class="spinner"></div>
+      <h3>Finding a stranger...</h3>
+      <p id="matchStatus">Connecting to network...</p>
+      <br/>
+      <button class="btn secondary" onclick="window.location.href='index.html'"
+        style="max-width:200px;margin:0 auto;">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Chat Screen -->
+  <div id="chatScreen" class="chat-container" style="display:none;">
+    <div class="chat-header">
+      <div>
+        <h2>👤 <span id="strangerName">Stranger</span></h2>
+        <div class="status" id="connectionStatus">Connected via P2P</div>
+      </div>
+      <button onclick="nextStranger()"
+        style="background:#00ffb3;border:none;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;">
+        Next ⏭
+      </button>
+    </div>
+
+    <div class="messages" id="messages"></div>
+
+    <div class="chat-actions">
+      <button onclick="requestSocial()">📲 Share Social ID</button>
+      <button onclick="nextStranger()">🔀 Next Stranger</button>
+      <button onclick="window.location.href='index.html'">🚪 Leave</button>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="msgInput" placeholder="Type a message..."
+        onkeydown="if(event.key==='Enter') sendMsg()"/>
+      <button onclick="sendMsg()">➤</button>
+    </div>
+  </div>
+
+  <!-- Adult Content Modal -->
+  <div class="modal-overlay" id="adultModal">
+    <div class="modal">
+      <h3>⚠️ Adult Content Detected</h3>
+      <p>This platform is text-only and clean. For adult conversations, please share your personal IDs and continue privately.</p>
+      <div class="social-inputs">
+        <input type="text" id="mySnapchat" placeholder="Your Snapchat ID (optional)"/>
+        <input type="text" id="myTelegram" placeholder="Your Telegram @username (optional)"/>
+        <input type="text" id="myInsta" placeholder="Your Instagram ID (optional)"/>
+      </div>
+      <div class="modal-btns">
+        <button class="confirm" onclick="shareSocialIds()">Send My IDs</button>
+        <button class="cancel" onclick="closeAdultModal()">Dismiss</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Social Request Modal -->
+  <div class="modal-overlay" id="socialModal">
+    <div class="modal">
+      <h3>📲 Social ID Request</h3>
+      <p id="socialModalText">Stranger wants to connect on social media.</p>
+      <div id="receivedIds" style="margin-bottom:16px; color:#00ffb3; font-size:0.9rem;"></div>
+      <div class="modal-btns">
+        <button class="confirm" onclick="closeSocialModal()">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="nostr.js"></script>
+  <script src="webrtc.js"></script>
+  <script src="chat.js"></script>
+</body>
+</html>
